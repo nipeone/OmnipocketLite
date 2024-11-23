@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:OmnipocketLite.AvaloniaMvvm.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="OmnipocketLite.AvaloniaMvvm.Views.SearchResultItem"
+			 x:DataType="vm:SearchResultItemViewModel">
+    <Border BorderBrush="{DynamicResource SystemControlForegroundBaseMediumBrush}" 
+            BorderThickness="1" Margin="0,0,0,10" Padding="10" CornerRadius="15">
+        <Grid ColumnDefinitions="Auto,*">
+            <Image Grid.Column="0"
+				   x:Name="DocTypeImage"
+				   Width="64"
+				   Height="64"
+				   Margin="0,0,10,0" />
+            <StackPanel Grid.Column="1">
+                <TextBlock x:Name="TextContent"
+						   TextWrapping="Wrap"
+                           Foreground="{DynamicResource SystemControlForegroundBaseHighBrush}"
+                           Margin="0,0,0,5"/>
+                <Separator Height="1"
+						   Margin="0,5,0,5"
+                           Background="{DynamicResource SystemControlForegroundBaseLowBrush}"/>
+                <Button x:Name="FilePathButton" 
+                        Foreground="{DynamicResource SystemControlForegroundBaseMediumBrush}" 
+                        FontStyle="Italic"
+                        Background="Transparent"
+						BorderThickness="0"
+						Padding="0"
+                        HorizontalAlignment="Left"
+						Cursor="Hand"/>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

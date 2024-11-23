@@ -1,0 +1,128 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:OmnipocketLite.AvaloniaMvvm.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="OmnipocketLite.AvaloniaMvvm.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="搜索应用"
+		TransparencyLevelHint="None"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="Default"
+        ExtendClientAreaTitleBarHeightHint="20"
+		>
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+
+	<Window.Styles>
+		<Style Selector="Window">
+			<Setter Property="Template">
+				<ControlTemplate>
+					<Panel>
+						<ExperimentalAcrylicBorder IsHitTestVisible="False">
+							<ExperimentalAcrylicBorder.Material>
+								<ExperimentalAcrylicMaterial
+                                    BackgroundSource="Digger"
+                                    TintColor="{DynamicResource SystemAltHighColor}"
+                                    TintOpacity="1"
+                                    MaterialOpacity="0.25" />
+							</ExperimentalAcrylicBorder.Material>
+						</ExperimentalAcrylicBorder>
+						<Border IsHitTestVisible="False">
+							<Border.Background>
+								<SolidColorBrush Color="{DynamicResource SystemAltHighColor}" Opacity="0.2"/>
+							</Border.Background>
+						</Border>
+						<ContentPresenter Content="{TemplateBinding Content}" />
+					</Panel>
+				</ControlTemplate>
+			</Setter>
+		</Style>
+
+		<!-- 自定义搜索框样式 -->
+		<Style Selector="TextBox">
+			<Setter Property="Background" Value="{DynamicResource SystemAltHighColor}"/>
+			<Setter Property="Foreground" Value="{DynamicResource SystemBaseHighColor}"/>
+			<Setter Property="CornerRadius" Value="20"/>
+			<Setter Property="Padding" Value="15,10"/>
+			<Setter Property="InnerRightContent">
+				<Template>
+					<Button Background="Transparent" Margin="0,0,5,0">
+						<PathIcon Data="{StaticResource search_regular}" Foreground="{DynamicResource SystemBaseHighColor}"/>
+					</Button>
+				</Template>
+			</Setter>
+		</Style>
+
+		<!-- 自定义按钮样式 -->
+		<Style Selector="Button.WindowControlButton">
+			<Setter Property="Margin" Value="0,3,0,3" />
+			<Setter Property="Width" Value="36"/>
+			<Setter Property="Height" Value="30"/>
+			<Setter Property="Background" Value="Transparent"/>
+			<Setter Property="Foreground" Value="{DynamicResource SystemBaseHighColor}"/>
+		</Style>
+
+		<!-- 添加 Header 样式 -->
+		<Style Selector="Grid#Header">
+			<Setter Property="Background">
+				<Setter.Value>
+					<SolidColorBrush Color="{DynamicResource SystemAltHighColor}" Opacity="0.1"/>
+				</Setter.Value>
+			</Setter>
+		</Style>
+
+	</Window.Styles>
+
+	<Grid RowDefinitions="Auto,*">
+		<Grid Name="Header" Grid.Row="0" ColumnDefinitions="Auto,Auto,*,Auto,Auto,Auto,Auto" PointerPressed="OnHeaderPointerPressed">
+			<TextBlock Text="内容搜索" VerticalAlignment="Center" Margin="10,0,0,0" />
+			<Button Grid.Column="1" x:Name="SettingsButton" Content="⚙️" Classes="WindowControlButton" Click="SettingsButton_Click"/>
+			<Button Grid.Column="2" x:Name="ThemeToggle" Content="🌞" Classes="WindowControlButton" Click="ThemeToggle_Click"/>
+			<Button Grid.Column="3" Content="➖" Classes="WindowControlButton" Click="MinimizeButton_Click"/>
+			<Button Grid.Column="4" Content="🟩" Classes="WindowControlButton" Click="MaximizeRestoreButton_Click"/>
+			<Button Grid.Column="5" Content="❌" Classes="WindowControlButton" Click="CloseButton_Click"/>
+		</Grid>
+
+		<SplitView Grid.Row="1" x:Name="MainSplitView" IsPaneOpen="False" DisplayMode="Inline" PanePlacement="Left" OpenPaneLength="300">
+			<SplitView.PaneBackground>
+				<SolidColorBrush Color="{DynamicResource SystemAltHighColor}" Opacity="0.2"/>
+			</SplitView.PaneBackground>
+			<SplitView.Transitions>
+				<Transitions>
+					<DoubleTransition Property="OpenPaneLength" Duration="0:0:0.2" Easing="CubicEaseOut"/>
+				</Transitions>
+			</SplitView.Transitions>
+			<SplitView.Pane>
+				<StackPanel Margin="10">
+					<TextBlock x:Name="SettingsTextBlock" Text="设置" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+					<!-- 在这里添加设置选项 -->
+				</StackPanel>
+			</SplitView.Pane>
+
+			<Grid RowDefinitions="Auto,*">
+				<TextBox Grid.Row="0"
+						 x:Name="SearchBox"
+						 Margin="20,5,20,10"
+						 Background="Transparent"
+						 Opacity="0.75"
+						 KeyDown="SearchBox_KeyDown"
+						 Watermark="输入搜索关键词...">
+					<TextBox.InnerRightContent>
+						<Button Name="Search" Content="🔍" Background="Transparent" CornerRadius="15" Click="SearchButton_Click"/>
+					</TextBox.InnerRightContent>
+				</TextBox>
+				<ScrollViewer Grid.Row="1">
+					<StackPanel x:Name="ResultsPanel" Margin="20,10,20,10"/>
+				</ScrollViewer>
+			</Grid>
+		</SplitView>
+	</Grid>
+
+</Window>
