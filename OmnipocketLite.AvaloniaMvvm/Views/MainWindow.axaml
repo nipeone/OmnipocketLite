@@ -11,7 +11,7 @@
 		TransparencyLevelHint="None"
         ExtendClientAreaToDecorationsHint="True"
         ExtendClientAreaChromeHints="Default"
-        ExtendClientAreaTitleBarHeightHint="20"
+        ExtendClientAreaTitleBarHeightHint="30"
 		>
 
     <Design.DataContext>
